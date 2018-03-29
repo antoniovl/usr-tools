@@ -72,7 +72,10 @@ def generate_combined_pwd(uppercase=True, numeral_size=99):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Random Password Generator', version='1.0')
+    ap_kwargs = {'description': 'Random Password Generator'}
+    if (sys.version_info < (3,0)):
+        kwargs['version'] = '1.0.1'
+    parser = argparse.ArgumentParser(**ap_kwargs)
     parser.add_argument('number', type=int, action='store',
                         help='Number of passwords to be generated')
     parser.add_argument('--numeral-range', type=int, action='store',
@@ -80,16 +83,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not (1 <= args.number <= 100):
-        print 'Valid values for number are 1 to 100'
+        print('Valid values for number are 1 to 100')
         sys.exit(1)
 
     if args.numeral_range:
         if not (1 <= args.numeral_range <= MAX_NUMERAL_LEN):
-            print 'Valid values for the numeral part are 1 to {}'.format(MAX_NUMERAL_LEN)
+            print('Valid values for the numeral part are 1 to {}'.format(MAX_NUMERAL_LEN))
             sys.exit(1)
         numeral_range = args.numeral_range
     else:
         numeral_range = 0
 
     for step in range(0, args.number):
-        print generate_combined_pwd(True, numeral_range)
+        print(generate_combined_pwd(True, numeral_range))
